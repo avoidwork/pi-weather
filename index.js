@@ -46,7 +46,7 @@ lcd.dot3k.joystick.on("button", () => {
 	on = !on;
 
 	if (on) {
-		lcd.message(lcd.last);
+		lcd.last();
 	} else {
 		lcd.dot3k.reset();
 	}
