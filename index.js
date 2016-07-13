@@ -25,7 +25,7 @@ process.on("SIGINT", () => {
 console.log("Setting LCD contrast & creating data directory");
 
 lcd.contrast();
-lcd.message({message: [messages.app, messages.dirCreate], backgroundColor: config.colors.ideal});
+lcd.message({str: [messages.default, messages.dirCreate], backgroundColor: config.colors.ideal});
 
 mkdirp(root, e => {
 	if (e) {
@@ -34,7 +34,7 @@ mkdirp(root, e => {
 		process.exit(1);
 	} else {
 		console.log(messages.dirCreated);
-		lcd.message({message: [messages.app, messages.dirCreate]});
+		lcd.message({str: [messages.default, messages.dirCreate]});
 		poll();
 	}
 });
