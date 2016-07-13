@@ -22,7 +22,7 @@ process.on("SIGTERM", () => {
 	lcd.kill(true);
 });
 
-lcd.contrast(63);
+lcd.contrast();
 lcd.message({message: messages.dirCreate, backgroundColor: config.colors.ideal});
 
 mkdirp(root, e => {
