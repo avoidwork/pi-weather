@@ -18,10 +18,9 @@ function poll () {
 
 function quit () {
 	lcd.kill(true);
-
-	setTimeout(() => {
-		process.exit(1);
-	}, 100);
+	process.nextTick(() => {
+		process.exit(0);
+	});
 }
 
 process.on("uncaughtException", quit);
