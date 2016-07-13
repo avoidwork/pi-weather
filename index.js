@@ -21,7 +21,7 @@ function quit () {
 
 	setTimeout(() => {
 		process.exit(1);
-	}, 500);
+	}, 100);
 }
 
 process.on("uncaughtException", quit);
