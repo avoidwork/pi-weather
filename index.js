@@ -18,14 +18,14 @@ process.on("uncaughtError", () => {
 	lcd.kill(true);
 });
 
-process.on("SIGTERM", () => {
+process.on("SIGINT", () => {
 	lcd.kill(true);
 });
 
 console.log("Setting LCD contrast & creating data directory");
 
 lcd.contrast();
-lcd.message({message: messages.dirCreate, backgroundColor: config.colors.ideal});
+lcd.message({message: [messages.app, messages.dirCreate], backgroundColor: config.colors.ideal});
 
 mkdirp(root, e => {
 	if (e) {
@@ -34,7 +34,7 @@ mkdirp(root, e => {
 		process.exit(1);
 	} else {
 		console.log(messages.dirCreated);
-		lcd.message({message: messages.dirCreated});
+		lcd.message({message: [messages.app, messages.dirCreate]});
 		poll();
 	}
 });
