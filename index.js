@@ -22,6 +22,8 @@ process.on("SIGTERM", () => {
 	lcd.kill(true);
 });
 
+console.log("Setting LCD contrast & creating data directory");
+
 lcd.contrast();
 lcd.message({message: messages.dirCreate, backgroundColor: config.colors.ideal});
 
@@ -31,7 +33,8 @@ mkdirp(root, e => {
 		lcd.kill(true);
 		process.exit(1);
 	} else {
-		lcd.message({message: messages.dirCreated, backgroundColor: config.colors.ideal});
+		console.log(messages.dirCreated);
+		lcd.message({message: messages.dirCreated});
 		poll();
 	}
 });
