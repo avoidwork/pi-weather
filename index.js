@@ -10,7 +10,7 @@ const //weather = require("canada-weather"),
 
 function poll () {
 	setTimeout(() => {
-		lcd.message({str: ["Real data would be awesome"]});
+		lcd.message({msg: "Real data would be awesome"});
 	}, config.ttl || 60);
 }
 
@@ -19,11 +19,11 @@ function quit () {
 	process.exit(1);
 }
 
-process.on("uncaughtError", quit);
+process.on("uncaughtException", quit);
 process.on("SIGINT", quit);
 
 lcd.contrast();
-lcd.message({msg: messages.dirCreate, backgroundColor: config.colors.ideal});
+lcd.message({msg: messages.dirCreate});
 
 mkdirp(root, e => {
 	if (e) {
