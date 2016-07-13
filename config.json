@@ -1,10 +1,10 @@
 {
   "city": "Ottawa",
   "temperatures": {
-    "hot": [30, Infinity],
+    "hot": [30, "*"],
     "ideal": [8, 30],
     "cold": [-15, 7],
-    "veryCold": [-16, -Infinity]
+    "veryCold": [-16, "*"]
   },
   "colors": {
     "hot": [0, 255, 0],
