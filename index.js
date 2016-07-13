@@ -14,18 +14,16 @@ function poll () {
 	}, config.ttl || 60);
 }
 
-process.on("uncaughtError", () => {
+function quit () {
 	lcd.kill(true);
-});
+	process.exit(1);
+}
 
-process.on("SIGINT", () => {
-	lcd.kill(true);
-});
-
-console.log("Setting LCD contrast & creating data directory");
+process.on("uncaughtError", quit);
+process.on("SIGINT", quit);
 
 lcd.contrast();
-lcd.message({str: [messages.default, messages.dirCreate], backgroundColor: config.colors.ideal});
+lcd.message({msg: messages.dirCreate, backgroundColor: config.colors.ideal});
 
 mkdirp(root, e => {
 	if (e) {
@@ -34,7 +32,7 @@ mkdirp(root, e => {
 		process.exit(1);
 	} else {
 		console.log(messages.dirCreated);
-		lcd.message({str: [messages.default, messages.dirCreate]});
+		lcd.message({msg: messages.dirCreated});
 		poll();
 	}
 });
