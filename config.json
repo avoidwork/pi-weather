@@ -1,5 +1,6 @@
 {
   "city": "Ottawa",
+  "ttl": 900,
   "temperatures": {
     "hot": [30, "*"],
     "ideal": [8, 30],
