@@ -10,7 +10,7 @@ const //weather = require("canada-weather"),
 
 function poll () {
 	setTimeout(() => {
-		lcd.message({message: "Real data would be awesome", backgroundColor: config.colors.ideal});
+		lcd.message({str: ["Real data would be awesome"]});
 	}, config.ttl || 60);
 }
 
