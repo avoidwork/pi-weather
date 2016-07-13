@@ -1,15 +1,7 @@
 module.exports = function (grunt) {
 	grunt.initConfig({
 		eslint: {
-			target: ["lib/*.js"]
-		},
-		mochaTest : {
-			options: {
-				reporter: "spec"
-			},
-			test : {
-				src : ["test/*.js"]
-			}
+			target: ["index.js", "lib/*.js"]
 		},
 		nsp: {
 			package: grunt.file.readJSON("package.json")
@@ -18,10 +10,9 @@ module.exports = function (grunt) {
 
 	// tasks
 	grunt.loadNpmTasks("grunt-eslint");
-	grunt.loadNpmTasks("grunt-mocha-test");
 	grunt.loadNpmTasks("grunt-nsp");
 
 	// aliases
-	grunt.registerTask("test", ["eslint", "mochaTest", "nsp"]);
+	grunt.registerTask("test", ["eslint", "nsp"]);
 	grunt.registerTask("default", ["test"]);
 };

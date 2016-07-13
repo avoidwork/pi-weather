@@ -1,8 +1,8 @@
 "use strict";
 
-const weather = require("canada-weather"),
+const //weather = require("canada-weather"),
 	mkdirp = require("mkdirp"),
-	fs = require("fs"),
+	//fs = require("fs"),
 	JVSDisplayOTron = require("jvsdisplayotron"),
 	dot3k = new JVSDisplayOTron.DOT3k(),
 	path = require("path"),
