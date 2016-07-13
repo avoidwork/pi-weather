@@ -10,7 +10,7 @@ const //weather = require("canada-weather"),
 
 function poll () {
 	setTimeout(() => {
-		lcd.message({msg: messages.default + ": " + messages.dataLoading});
+		lcd.message({msg: messages.dataLoading});
 	}, config.ttl || 60);
 }
 
@@ -23,16 +23,18 @@ process.on("uncaughtException", quit);
 process.on("SIGINT", quit);
 
 lcd.contrast();
-lcd.message({msg: messages.dirCreate});
+lcd.message({msg: messages.default});
 
-mkdirp(root, e => {
-	if (e) {
-		console.error(e.stack);
-		lcd.kill(true);
-		process.exit(1);
-	} else {
-		console.log(messages.dirCreated);
-		lcd.message({msg: messages.dirCreated});
-		poll();
-	}
-});
+setTimeout(() => {
+	mkdirp(root, e => {
+		if (e) {
+			console.error(e.stack);
+			lcd.kill(true);
+			process.exit(1);
+		} else {
+			console.log(messages.dirCreated);
+			lcd.message({msg: messages.dirCreated});
+			poll();
+		}
+	});
+}, 1000);
