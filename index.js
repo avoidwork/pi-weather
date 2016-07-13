@@ -1,35 +1,31 @@
 "use strict";
 
 const //weather = require("canada-weather"),
+	weather = {poll: () => void 0},
 	mkdirp = require("mkdirp"),
-	//fs = require("fs"),
-	JVSDisplayOTron = require("jvsdisplayotron"),
-	dot3k = new JVSDisplayOTron.DOT3k(),
 	path = require("path"),
 	root = path.join(__dirname, "data"),
 	config = require(path.join(__dirname, "config.json")),
-	messages = require(path.join(__dirname, "lib", "messages.js"));
+	messages = require(path.join(__dirname, "lib", "messages.js")),
+	lcd = require(path.join(__dirname, "lib", "lcd.js"));
 
-function lcd ({message = messages.default, backgroundColor = void 0} = {}) {
-	dot3k.lcd.write(message);
+process.on("uncaughtError", () => {
+	lcd.kill(true);
+});
 
-	if (backgroundColor) {
-		dot3k.backlight.setToRGB(...backgroundColor);
-	}
-}
+process.on("SIGTERM", () => {
+	lcd.kill(true);
+});
 
-lcd({message: "Data directory exists"});
+lcd({message: messages.dirCreate, backgroundColor: config.colors.ideal});
 
 mkdirp(root, e => {
 	if (e) {
 		console.error(e.stack);
-		dot3k.kill(true);
+		lcd.kill(true);
 		process.exit(1);
 	} else {
-		lcd({message: "Data directory exists", backgroundColor: config.colors.ideal});
+		lcd.message({message: messages.dirCreated, backgroundColor: config.colors.ideal});
+		weather.poll({ttl: config.ttl, city: config.city, lcd: lcd});
 	}
-});
-
-process.on("SIGINT", () => {
-	dot3k.kill(true);
 });
