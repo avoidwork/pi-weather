@@ -8,12 +8,13 @@ const //weather = require("canada-weather"),
 	messages = require(path.join(__dirname, "lib", "messages.js")),
 	lcd = require(path.join(__dirname, "lib", "lcd.js"));
 
-let on = true;
+let on = true,
+	timer = void 0;
 
 function poll () {
 	setTimeout(() => {
 		lcd.message({msg: messages.dataLoading});
-	}, config.ttl || 60);
+	}, config.poll || 60);
 }
 
 function quit () {
@@ -21,6 +22,31 @@ function quit () {
 	process.nextTick(() => {
 		process.exit(0);
 	});
+}
+
+function toggle () {
+	on = !on;
+
+	if (on) {
+		lcd.last();
+		decay();
+	} else {
+		lcd.dot3k.reset();
+	}
+}
+
+function decay () {
+	if (timer) {
+		clearTimeout(timer);
+	}
+
+	timer = setTimeout(() => {
+		if (on) {
+			toggle();
+		}
+
+		timer = void 0;
+	}, config.ttl);
 }
 
 process.on("uncaughtException", quit);
@@ -37,22 +63,16 @@ process.on("SIGINT", quit);
 		}
 
 		lcd.message({msg: msg});
+		decay();
 	});
 });
 
 // Joystick press (toggle LCD)
-lcd.dot3k.joystick.on("button", () => {
-	on = !on;
-
-	if (on) {
-		lcd.last();
-	} else {
-		lcd.dot3k.reset();
-	}
-});
+lcd.dot3k.joystick.on("button", toggle);
 
 lcd.contrast();
 lcd.message({msg: messages.default});
+decay();
 
 setTimeout(() => {
 	mkdirp(root, e => {

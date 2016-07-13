@@ -1,5 +1,6 @@
 {
   "city": "Ottawa",
+  "poll": 60,
   "ttl": 60,
   "temperatures": {
     "hot": [30, "*"],
