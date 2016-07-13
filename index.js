@@ -26,7 +26,7 @@ process.on("SIGINT", quit);
 
 // Joystick (shows datums)
 ["up", "down", "left", "right"].forEach((i, idx) => {
-	dot3k.joystick.on(i, () => {
+	lcd.dot3k.joystick.on(i, () => {
 		let msg;
 
 		switch (idx) {
@@ -39,9 +39,14 @@ process.on("SIGINT", quit);
 });
 
 // Joystick press (toggle LCD)
-dot3k.joystick.on("button", () => {
+lcd.dot3k.joystick.on("button", () => {
 	on = !on;
-	on ? lcd.message(lcd.last) : dot3k.reset();
+
+	if (on) {
+		lcd.message(lcd.last);
+	} else {
+		lcd.dot3k.reset();
+	}
 });
 
 lcd.contrast();
