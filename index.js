@@ -8,6 +8,8 @@ const //weather = require("canada-weather"),
 	messages = require(path.join(__dirname, "lib", "messages.js")),
 	lcd = require(path.join(__dirname, "lib", "lcd.js"));
 
+let on = true;
+
 function poll () {
 	setTimeout(() => {
 		lcd.message({msg: messages.dataLoading});
@@ -21,6 +23,26 @@ function quit () {
 
 process.on("uncaughtException", quit);
 process.on("SIGINT", quit);
+
+// Joystick (shows datums)
+["up", "down", "left", "right"].forEach((i, idx) => {
+	dot3k.joystick.on(i, () => {
+		let msg;
+
+		switch (idx) {
+			default:
+				msg = i.toUpperCase();
+		}
+
+		lcd.message({msg: msg});
+	});
+});
+
+// Joystick press (toggle LCD)
+dot3k.joystick.on("button", () => {
+	on = !on;
+	on ? lcd.message(lcd.last) : dot3k.reset();
+});
 
 lcd.contrast();
 lcd.message({msg: messages.default});
