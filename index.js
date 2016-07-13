@@ -9,6 +9,7 @@ const //weather = require("canada-weather"),
 	lcd = require(path.join(__dirname, "lib", "lcd.js"));
 
 let on = true,
+	center = true,
 	timer = void 0;
 
 function poll () {
@@ -49,26 +50,38 @@ function decay () {
 	}, config.decay);
 }
 
+function datum (idx) {
+	let msg;
+
+	switch (idx) {
+		default:
+			msg = i.toUpperCase();
+	}
+
+	lcd.message({msg: msg});
+	decay();
+	center = false;
+}
+
 process.on("uncaughtException", quit);
 process.on("SIGINT", quit);
 
 // Joystick (shows datums)
 ["up", "down", "left", "right"].forEach((i, idx) => {
 	lcd.dot3k.joystick.on(i, () => {
-		let msg;
-
-		switch (idx) {
-			default:
-				msg = i.toUpperCase();
-		}
-
-		lcd.message({msg: msg});
-		decay();
+		datum(idx);
 	});
 });
 
 // Joystick press (toggle LCD)
-lcd.dot3k.joystick.on("button", toggle);
+lcd.dot3k.joystick.on("button", () => {
+	if (center) {
+		toggle();
+	} else {
+		center = true;
+		lcd.message({msg: messages.default});
+	}
+});
 
 lcd.contrast();
 lcd.message({msg: messages.default});
