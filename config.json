@@ -1,0 +1,9 @@
+{
+  "city": "Ottawa",
+  "scale": {
+    "hot": [30, Infinity],
+    "ideal": [8, 30],
+    "cold": [-15, 7],
+    "veryCold": [-16, -Infinity]
+  }
+}

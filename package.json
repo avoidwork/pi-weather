@@ -1,0 +1,30 @@
+{
+  "name": "pi-weather",
+  "version": "1.0.0",
+  "description": "Canadian Raspberry Pi local weather station (requires a Displayotron)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/avoidwork/pi-weather.git"
+  },
+  "author": "Jason Mulligan <jason.mulligan@avoidwork.com>",
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/avoidwork/pi-weather/issues"
+  },
+  "homepage": "https://github.com/avoidwork/pi-weather#readme",
+  "dependencies": {
+    "canada-weather": "^1.1.20",
+    "jvsdisplayotron": "^1.1.0",
+    "mkdirp": "^0.5.1"
+  },
+  "devDependencies": {
+    "grunt": "~1.0.1",
+    "grunt-cli": "~1.2.0",
+    "grunt-eslint": "~18.1.0",
+    "grunt-nsp": "~2.2.0"
+  }
+}
