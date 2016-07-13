@@ -46,7 +46,7 @@ function decay () {
 		}
 
 		timer = void 0;
-	}, config.ttl);
+	}, config.decay);
 }
 
 process.on("uncaughtException", quit);

@@ -1,7 +1,7 @@
 {
   "city": "Ottawa",
   "poll": 60,
-  "ttl": 60,
+  "decay": 60,
   "temperatures": {
     "hot": [30, "*"],
     "ideal": [8, 30],
