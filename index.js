@@ -31,8 +31,10 @@ function toggle () {
 	if (on) {
 		lcd.last();
 		decay();
+		console.log("last message");
 	} else {
 		lcd.dot3k.reset();
+		console.log("reset");
 	}
 }
 
