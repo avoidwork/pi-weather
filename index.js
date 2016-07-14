@@ -51,11 +51,12 @@ function decay () {
 }
 
 function datum (idx) {
-	let msg;
+	let temp = ["up", "down", "left", "right"],
+		msg;
 
 	switch (idx) {
 		default:
-			msg = i.toUpperCase();
+			msg = temp[idx].toUpperCase();
 	}
 
 	lcd.message({msg: msg});
