@@ -80,6 +80,7 @@ lcd.dot3k.joystick.on("button", () => {
 	console.log("button");
 
 	if (center) {
+		lcd.clear();
 		toggle();
 		console.log("Toggling LCD");
 	} else {
