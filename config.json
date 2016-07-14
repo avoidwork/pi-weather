@@ -1,10 +1,10 @@
 {
   "city": "Ottawa",
   "colors": {
-    "hot": [0, 255, 0],
+    "hot": [255, 0, 0],
     "ideal": [0, 0, 255],
     "cold": [0, 255, 0],
-    "veryCold": [0, 255, 0]
+    "veryCold": [0, 150, 0]
   },
   "fade": 60,
   "poll": 60,
