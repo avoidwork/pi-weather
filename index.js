@@ -68,9 +68,8 @@ process.on("SIGINT", quit);
 
 // Joystick (shows datums)
 ["up", "down", "left", "right"].forEach((i, idx) => {
-	console.log(i);
-
 	lcd.dot3k.joystick.on(i, () => {
+		console.log(i);
 		datum(idx);
 		center = false;
 	});
