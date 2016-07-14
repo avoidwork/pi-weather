@@ -10,6 +10,7 @@ const //weather = require("canada-weather"),
 
 let on = true,
 	center = true,
+	first = true,
 	decayTimer = void 0;
 
 function quit () {
