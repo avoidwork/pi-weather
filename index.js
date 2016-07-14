@@ -61,7 +61,6 @@ function datum (idx) {
 
 	lcd.message({msg: msg});
 	decay();
-	center = false;
 }
 
 process.on("uncaughtException", quit);
@@ -71,6 +70,7 @@ process.on("SIGINT", quit);
 ["up", "down", "left", "right"].forEach((i, idx) => {
 	lcd.dot3k.joystick.on(i, () => {
 		datum(idx);
+		center = false;
 	});
 });
 
@@ -79,8 +79,8 @@ lcd.dot3k.joystick.on("button", () => {
 	if (center) {
 		toggle();
 	} else {
-		center = true;
 		lcd.message({msg: messages.default});
+		center = true;
 	}
 });
 
