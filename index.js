@@ -47,7 +47,7 @@ function datum (key) {
 	if (key === "up") {
 		msg = [match ? match.event.description : messages.nowarning];
 	} else if (key === "down") {
-		msg = [match ? "Updated " + moment.unix(match / 1000).fromNow() + " some time ago" : messages.error];
+		msg = defaultMessage;
 	} else if (key === "left") {
 		msg = [match ? match[0] : messages.error];
 	} else if (key === "right") {
