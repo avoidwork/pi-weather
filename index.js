@@ -9,9 +9,7 @@ const //weather = require("canada-weather"),
 	lcd = require(path.join(__dirname, "lib", "lcd.js"));
 
 let on = true,
-	center = true,
-	first = true,
-	decayTimer = void 0;
+	center = true;
 
 function quit () {
 	lcd.kill(true);
@@ -45,6 +43,9 @@ function datum (idx) {
 	lcd.message({msg: msg});
 }
 
+lcd.contrast();
+lcd.message({msg: messages.default});
+
 process.on("uncaughtException", quit);
 process.on("SIGINT", quit);
 
@@ -71,9 +72,6 @@ lcd.dot3k.joystick.on("button", () => {
 		console.log("Returning to center");
 	}
 });
-
-lcd.contrast();
-lcd.message({msg: messages.default});
 
 setTimeout(() => {
 	mkdirp(root, e => {
