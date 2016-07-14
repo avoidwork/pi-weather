@@ -78,7 +78,6 @@ process.on("SIGINT", quit);
 // Joystick press (toggle LCD)
 lcd.dot3k.joystick.on("button", () => {
 	if (center) {
-		lcd.clear();
 		toggle();
 	} else {
 		lcd.message({msg: defaultMessage});
