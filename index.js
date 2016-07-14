@@ -83,7 +83,7 @@ lcd.dot3k.joystick.on("button", () => {
 		toggle();
 	} else {
 		lcd.message({msg: messages.default});
-		center = true;
+		center = !center;
 	}
 });
 
