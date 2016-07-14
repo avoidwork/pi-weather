@@ -26,26 +26,11 @@ function toggle () {
 
 	if (on) {
 		lcd.last();
-		decay();
 		console.log("last message");
 	} else {
 		lcd.dot3k.reset();
 		console.log("reset");
 	}
-}
-
-function decay () {
-	if (decayTimer) {
-		clearTimeout(decayTimer);
-	}
-
-	decayTimer = setTimeout(() => {
-		if (on) {
-			toggle();
-		}
-
-		decayTimer = void 0;
-	}, config.decay);
 }
 
 function datum (idx) {
@@ -58,7 +43,6 @@ function datum (idx) {
 	}
 
 	lcd.message({msg: msg});
-	decay();
 }
 
 process.on("uncaughtException", quit);
@@ -90,7 +74,6 @@ lcd.dot3k.joystick.on("button", () => {
 
 lcd.contrast();
 lcd.message({msg: messages.default});
-//decay();
 
 setTimeout(() => {
 	mkdirp(root, e => {
