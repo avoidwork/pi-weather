@@ -89,6 +89,8 @@ lcd.dot3k.joystick.on("button", () => {
 			lcd.message({msg: messages.default});
 			center = true;
 		}
+
+		buttonTimer = void 0;
 	}, 50);
 });
 
