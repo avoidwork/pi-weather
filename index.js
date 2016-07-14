@@ -3,6 +3,7 @@
 const //weather = require("canada-weather"),
 	mkdirp = require("mkdirp"),
 	path = require("path"),
+	jsonpath = require("jsonpath").query,
 	root = path.join(__dirname, "data"),
 	config = require(path.join(__dirname, "config.json")),
 	pkg = require(path.join(__dirname, "package.json")),
@@ -12,7 +13,8 @@ const //weather = require("canada-weather"),
 
 // Mutable state
 let on = true,
-	center = true;
+	center = true,
+	weather = {};
 
 function quit () {
 	lcd.kill(true);
@@ -31,16 +33,30 @@ function toggle () {
 	}
 }
 
-function datum (idx) {
-	let temp = ["up", "down", "left", "right"],
-		msg;
+function datum (key) {
+	let path = {
+			up: '$..warnings.warnings',
+			down: '$..weather.timestamp',
+			left: '$..forecastGroup.regionalNormals.textSummary',
+			right: '$..currentConditions.condition',
+		},
+		msg, match;
 
-	switch (idx) {
-		default:
-			msg = temp[idx].toUpperCase();
+	match = jsonpath(weather, path[key])[0] || null;
+
+	if (key === "up") {
+		msg = [match ? match.event.description : "No warning"];
+	} else if (key === "down") {
+		msg = [match ? "Updated " + moment.unix(match / 1000).fromNow() : " some time ago"];
+	} else if (key === "left") {
+		msg = match ? match[0] : "Something went wrong";
+	} else if (key === "right") {
+		msg = match ?["Updated " + moment.unix(match / 1000).fromNow()] : "Something went wrong";
 	}
 
-	lcd.message({msg: [msg]});
+	if (msg) {
+		lcd.message({msg: msg});
+	}
 }
 
 // Screen setup!
@@ -52,9 +68,9 @@ process.on("uncaughtException", quit);
 process.on("SIGINT", quit);
 
 // Joystick movements (shows datums)
-["up", "down", "left", "right"].forEach((i, idx) => {
+["up", "down", "left", "right"].forEach(i => {
 	lcd.dot3k.joystick.on(i, () => {
-		datum(idx);
+		datum(i);
 		center = false;
 	});
 });

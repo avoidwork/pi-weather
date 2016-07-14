@@ -17,7 +17,9 @@
   },
   "homepage": "https://github.com/avoidwork/pi-weather#readme",
   "dependencies": {
+    "JSONPath": "^0.11.2",
     "canada-weather": "^1.1.20",
+    "jsonpath": "^0.2.6",
     "jvsdisplayotron": "^1.1.0",
     "mkdirp": "^0.5.1"
   },
