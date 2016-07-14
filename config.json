@@ -1,6 +1,6 @@
 {
   "city": "Ottawa",
-  "contrast": 50,
+  "contrast": 55,
   "colors": {
     "hot": [255, 0, 0],
     "ideal": [0, 0, 255],
