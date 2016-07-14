@@ -28,6 +28,8 @@ function quit () {
 function toggle () {
 	on = !on;
 
+	console.log(on);
+
 	if (on) {
 		lcd.last();
 		decay();
