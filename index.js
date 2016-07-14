@@ -107,7 +107,7 @@ setTimeout(() => {
 		} else {
 			console.log(messages.dirCreated);
 			lcd.message({msg: messages.dirCreated});
-			poll();
+			//poll();
 		}
 	});
 }, 1000);
