@@ -45,13 +45,13 @@ function datum (key) {
 	match = JSONPath({json: weather, path: path[key]})[0] || null;
 
 	if (key === "up") {
-		msg = [match ? match.event.description : "No warning"];
+		msg = [match ? match.event.description : messages.nowarning];
 	} else if (key === "down") {
-		msg = [match ? "Updated " + moment.unix(match / 1000).fromNow() + " some time ago" : "Something went wrong"];
+		msg = [match ? "Updated " + moment.unix(match / 1000).fromNow() + " some time ago" : messages.error];
 	} else if (key === "left") {
-		msg = [match ? match[0] : "Something went wrong"];
+		msg = [match ? match[0] : messages.error];
 	} else if (key === "right") {
-		msg = [match ? "Updated " + moment.unix(match / 1000).fromNow() : "Something went wrong"];
+		msg = [match ? "Updated " + moment.unix(match / 1000).fromNow() : messages.error];
 	}
 
 	if (msg) {
