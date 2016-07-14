@@ -12,12 +12,6 @@ let on = true,
 	center = true,
 	decayTimer = void 0;
 
-function poll () {
-	setTimeout(() => {
-		lcd.message({msg: messages.dataLoading});
-	}, config.poll || 60);
-}
-
 function quit () {
 	lcd.kill(true);
 	setTimeout(() => {
@@ -27,7 +21,6 @@ function quit () {
 
 function toggle () {
 	on = !on;
-
 	console.log(on);
 
 	if (on) {
@@ -96,7 +89,7 @@ lcd.dot3k.joystick.on("button", () => {
 
 lcd.contrast();
 lcd.message({msg: messages.default});
-decay();
+//decay();
 
 setTimeout(() => {
 	mkdirp(root, e => {
