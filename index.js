@@ -10,7 +10,8 @@ const //weather = require("canada-weather"),
 
 let on = true,
 	center = true,
-	timer = void 0;
+	buttonTimer = void 0,
+	decayTimer = void 0;
 
 function poll () {
 	setTimeout(() => {
@@ -37,16 +38,16 @@ function toggle () {
 }
 
 function decay () {
-	if (timer) {
-		clearTimeout(timer);
+	if (decayTimer) {
+		clearTimeout(decayTimer);
 	}
 
-	timer = setTimeout(() => {
+	decayTimer = setTimeout(() => {
 		if (on) {
 			toggle();
 		}
 
-		timer = void 0;
+		decayTimer = void 0;
 	}, config.decay);
 }
 
@@ -76,12 +77,19 @@ process.on("SIGINT", quit);
 
 // Joystick press (toggle LCD)
 lcd.dot3k.joystick.on("button", () => {
-	if (center) {
-		toggle();
-	} else {
-		lcd.message({msg: messages.default});
-		center = true;
+	if (buttonTimer) {
+		clearTimeout(buttonTimer);
 	}
+
+	// Debouncing the button 'cause a double press is possible
+	buttonTimer = setTimeout(() => {
+		if (center) {
+			toggle();
+		} else {
+			lcd.message({msg: messages.default});
+			center = true;
+		}
+	}, 50);
 });
 
 lcd.contrast();
