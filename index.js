@@ -81,7 +81,6 @@ setTimeout(() => {
 			process.exit(1);
 		} else {
 			console.log(messages.dirCreated);
-			lcd.message({msg: messages.dirCreated});
 			//poll();
 		}
 	});
