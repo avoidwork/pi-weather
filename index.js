@@ -51,7 +51,7 @@ lcd.message({msg: defaultMessage});
 process.on("uncaughtException", quit);
 process.on("SIGINT", quit);
 
-// Joystick (shows datums)
+// Joystick movements (shows datums)
 ["up", "down", "left", "right"].forEach((i, idx) => {
 	lcd.dot3k.joystick.on(i, () => {
 		datum(idx);
