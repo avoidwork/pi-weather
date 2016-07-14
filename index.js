@@ -5,8 +5,10 @@ const //weather = require("canada-weather"),
 	path = require("path"),
 	root = path.join(__dirname, "data"),
 	config = require(path.join(__dirname, "config.json")),
+	pkg = require(path.join(__dirname, "package.json")),
 	messages = require(path.join(__dirname, "lib", "messages.js")),
-	lcd = require(path.join(__dirname, "lib", "lcd.js"));
+	lcd = require(path.join(__dirname, "lib", "lcd.js")),
+	defaultMessage = [messages.default, void 0, pkg.version];
 
 let on = true,
 	center = true;
@@ -40,11 +42,11 @@ function datum (idx) {
 			msg = temp[idx].toUpperCase();
 	}
 
-	lcd.message({msg: msg});
+	lcd.message({msg: [msg]});
 }
 
-lcd.contrast();
-lcd.message({msg: messages.default});
+lcd.contrast(config.contrast);
+lcd.message({msg: defaultMessage});
 
 process.on("uncaughtException", quit);
 process.on("SIGINT", quit);
@@ -67,7 +69,7 @@ lcd.dot3k.joystick.on("button", () => {
 		toggle();
 		console.log("Toggling LCD");
 	} else {
-		lcd.message({msg: messages.default});
+		lcd.message({msg: defaultMessage});
 		center = !center;
 		console.log("Returning to center");
 	}
