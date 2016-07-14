@@ -20,9 +20,9 @@ function poll () {
 
 function quit () {
 	lcd.kill(true);
-	process.nextTick(() => {
+	setTimeout(() => {
 		process.exit(0);
-	});
+	}, 250);
 }
 
 function toggle () {
