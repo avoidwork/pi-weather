@@ -9,7 +9,7 @@ const //weather = require("canada-weather"),
 	pkg = require(path.join(__dirname, "package.json")),
 	messages = require(path.join(__dirname, "lib", "messages.js")),
 	lcd = require(path.join(__dirname, "lib", "lcd.js")),
-	defaultMessage = [messages.default, void 0, pkg.version];
+	defaultMessage = [messages.default, pkg.version];
 
 // Mutable state
 let on = true,
