@@ -3,6 +3,7 @@
 const //weather = require("canada-weather"),
 	mkdirp = require("mkdirp"),
 	path = require("path"),
+	os = require("os"),
 	jsonpath = require("JSONPath"),
 	moment = require("moment"),
 	root = path.join(__dirname, "data"),
@@ -10,13 +11,31 @@ const //weather = require("canada-weather"),
 	pkg = require(path.join(__dirname, "package.json")),
 	messages = require(path.join(__dirname, "lib", "messages.js")),
 	lcd = require(path.join(__dirname, "lib", "lcd.js")),
-	defaultMessage = [messages.default, pkg.version];
+	defaultMessage = [messages.default, "v" + pkg.version],
+	ipv4 = /IPv4/;
 
 // Mutable state
 let on = true,
 	center = true,
 	weather = {},
 	fadeTimer;
+
+function ip () {
+	const ifaces = os.networkInterfaces();
+	let result = "";
+
+	Object.keys(ifaces).forEach(ifname => {
+		ifaces[ifname].forEach(iface => {
+			if (!ipv4.test(iface.family) || iface.internal) {
+				return;
+			}
+
+			result += iface.address;
+		});
+	});
+
+	return result;
+}
 
 function quit () {
 	lcd.kill(true);
@@ -49,7 +68,7 @@ function datum (key) {
 	if (key === "up") {
 		msg = [match ? match.event.description : messages.nowarning];
 	} else if (key === "down") {
-		msg = defaultMessage;
+		msg = defaultMessage.concat([ip()]);
 	} else if (key === "left") {
 		msg = [match ? match[0] : messages.error];
 	} else if (key === "right") {
