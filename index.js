@@ -126,8 +126,7 @@ setTimeout(() => {
 			lcd.kill(true);
 			process.exit(1);
 		} else {
-			//poll();
-			void 0;
+			fade();
 		}
 	});
 }, 1000);
