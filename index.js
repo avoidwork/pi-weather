@@ -3,7 +3,8 @@
 const //weather = require("canada-weather"),
 	mkdirp = require("mkdirp"),
 	path = require("path"),
-	JSONPath = require("JSONPath"),
+	jsonpath = require("JSONPath"),
+	moment = require("moment"),
 	root = path.join(__dirname, "data"),
 	config = require(path.join(__dirname, "config.json")),
 	pkg = require(path.join(__dirname, "package.json")),
@@ -14,7 +15,8 @@ const //weather = require("canada-weather"),
 // Mutable state
 let on = true,
 	center = true,
-	weather = {};
+	weather = {},
+	fadeTimer;
 
 function quit () {
 	lcd.kill(true);
@@ -34,15 +36,15 @@ function toggle () {
 }
 
 function datum (key) {
-	let path = {
-			up: '$..warnings.warnings',
-			down: '$..weather.timestamp',
-			left: '$..forecastGroup.regionalNormals.textSummary',
-			right: '$..currentConditions.condition',
+	let paths = {
+			up: "$..warnings.warnings",
+			down: "$..weather.timestamp",
+			left: "$..forecastGroup.regionalNormals.textSummary",
+			right: "$..currentConditions.condition"
 		},
 		msg, match;
 
-	match = JSONPath({json: weather, path: path[key]})[0] || null;
+	match = jsonpath({json: weather, path: paths[key]})[0] || null;
 
 	if (key === "up") {
 		msg = [match ? match.event.description : messages.nowarning];
@@ -59,6 +61,17 @@ function datum (key) {
 	}
 }
 
+function fade () {
+	if (fadeTimer) {
+		clearTimeout(fadeTimer);
+	}
+
+	fadeTimer = setTimeout(function () {
+		on = false;
+		lcd.dot3k.reset();
+	}, config.fade);
+}
+
 // Screen setup!
 lcd.contrast(config.contrast);
 lcd.message({msg: defaultMessage});
@@ -72,6 +85,7 @@ process.on("SIGINT", quit);
 	lcd.dot3k.joystick.on(i, () => {
 		datum(i);
 		center = false;
+		fade();
 	});
 });
 
@@ -82,6 +96,7 @@ lcd.dot3k.joystick.on("button", () => {
 	} else {
 		lcd.message({msg: defaultMessage});
 		center = !center;
+		fade();
 	}
 });
 
