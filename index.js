@@ -6,7 +6,6 @@ const //weather = require("canada-weather"),
 	os = require("os"),
 	jsonpath = require("JSONPath"),
 	moment = require("moment"),
-	root = path.join(__dirname, "data"),
 	config = require(path.join(__dirname, "config.json")),
 	pkg = require(path.join(__dirname, "package.json")),
 	messages = require(path.join(__dirname, "lib", "messages.js")),
@@ -120,7 +119,7 @@ lcd.dot3k.joystick.on("button", () => {
 });
 
 setTimeout(() => {
-	mkdirp(root, e => {
+	mkdirp(path.resolve(config.data), e => {
 		if (e) {
 			console.error(e.stack);
 			lcd.kill(true);
