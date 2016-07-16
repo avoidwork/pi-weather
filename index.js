@@ -88,7 +88,7 @@ function fade () {
 	fadeTimer = setTimeout(function () {
 		on = false;
 		lcd.dot3k.reset();
-	}, config.fade);
+	}, config.fade * 1000);
 }
 
 // Screen setup!
